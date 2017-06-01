@@ -268,6 +268,7 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnChanges
     }
 
     ngOnInit() {
+        
         if (this.dateFormatter && this.dateFormatter.formatMonthViewDay) {
             this.formatDayLabel = this.dateFormatter.formatMonthViewDay;
         } else {
@@ -415,7 +416,6 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnChanges
 
     getHighlightClass(date:IMonthViewRow):string {
         let className = '';
-
         if (date.hasEvent) {
             if (date.secondary) {
                 className = 'monthview-secondary-with-event';
@@ -501,7 +501,7 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnChanges
                 eventEndTime = new Date(event.endTime.getTime()),
                 st:Date,
                 et:Date;
-
+           
             if (event.allDay) {
                 if (eventEndTime <= utcStartTime || eventStartTime >= utcEndTime) {
                     continue;
@@ -546,18 +546,9 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnChanges
             }
 
             let index = Math.floor(timeDifferenceStart);
-            while (index < timeDifferenceEnd - eps) {
-                dates[index].hasEvent = true;
-                let eventSet = dates[index].events;
-                if (eventSet) {
-                    eventSet.push(event);
-                } else {
-                    eventSet = [];
-                    eventSet.push(event);
-                    dates[index].events = eventSet;
-                }
-                index += 1;
-            }
+            dates[index].hasEvent = true;
+            dates[index].events = dates[index].events ? dates[index].events : [];
+            dates[index].events.push(event);
         }
 
         for (let r = 0; r < 42; r += 1) {

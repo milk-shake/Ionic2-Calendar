@@ -211,7 +211,7 @@ export enum Step {
         </div>
     `,
     styles: [`
-        :host > div { height: 100%; }
+        // :host > div { height: 100%; }
 
         .event-detail-container {
           border-top: 2px darkgrey solid;
